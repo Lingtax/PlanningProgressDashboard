@@ -85,7 +85,7 @@ shinyServer(function(input, output) {
   paste("For ", pwr$power*100, "% power to detect an effect of r-squared = ", pwr$f2/(pwr$f2+1),
         " or greater at an alpha of p < ",
         pwr$sig.level, " will require ", ceiling(pwr$v+1+pwr$u), " participants in total.", 
-        " To account for missingness r incomplete data, a 10% oversample would take that to ", 
+        " To account for missingness or incomplete data, a 10% oversample would take that to ", 
         ceiling(pwr$v+1+pwr$u*1.1), "." , sep="")
   })
   output$GLMpower <- renderText({pwr_GLM()})
