@@ -168,6 +168,12 @@ navbarPage("Planning and Progress Dashboard",
                               a("(@lingtax)", href="https://twitter.com/lingtax"),
                               " to promote better planned research.",
                                                                  p(),
-                              "It is powered by the pwr, and ggplot2 packages, and is built in Shiny")
+                              "It is powered by ", strong("R"), " and the ", strong("pwr"), " and ", strong("ggplot2"), 
+                              " packages, and is built in ", strong("Shiny"), ".",
+                              
+                              p(),
+                              
+                              "For bug reports and feature requests, please raise an issue at ", 
+                              a("this github repository", href = "https://github.com/Lingtax/PlanningProgressDashboard/issues"))
            )
 )
