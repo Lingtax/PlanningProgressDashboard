@@ -1,6 +1,10 @@
 library(shiny)
 
 navbarPage("Planning and Progress Dashboard",
+
+# Plannning Inputs --------------------------------------------------------
+
+           
            tabPanel("Planning",
                     sidebarLayout(
                       sidebarPanel(
@@ -51,7 +55,10 @@ navbarPage("Planning and Progress Dashboard",
                       numericInput("Plan_target_n", "Target Sample size", value = 85)
                       ),
                       
-                      # Planning main panel
+
+# Planning Main -----------------------------------------------------------
+
+
                       mainPanel(
                         fluidRow(h3("Power"),
                                  conditionalPanel("input.test == 't-test'",
@@ -74,7 +81,10 @@ navbarPage("Planning and Progress Dashboard",
 
            ),
            
-           # Tab 2 - Progress
+
+# Progress inputs ---------------------------------------------------------
+
+
            tabPanel("Progress",
                     sidebarLayout(
                       sidebarPanel(
@@ -137,7 +147,9 @@ navbarPage("Planning and Progress Dashboard",
                         sliderInput("prog_alpha", "Alpha (Type I error rate):", value = .05, min = 0, max = .1)
                       ),
                       
-                      # Progress main Panel
+
+# Progress main -----------------------------------------------------------
+
                       mainPanel(
                         
                         fluidRow(h3("Sampling Rate"),
@@ -163,6 +175,10 @@ navbarPage("Planning and Progress Dashboard",
                     )
            ),
            
+
+# About Panel -------------------------------------------------------------
+
+
            tabPanel("About",
                     fluidPage("This was built by Mathew Ling", 
                               a("(@lingtax)", href="https://twitter.com/lingtax"),
