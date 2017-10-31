@@ -210,6 +210,6 @@ navbarPage("Planning and Progress Dashboard",
                               p(),
                               
                               "For bug reports and feature requests, please raise an issue at ", 
-                              a("this github repository", href = "https://github.com/Lingtax/PlanningProgressDashboard/issues"))
+                              a("this github repository", href = "https://github.com/Lingtax/PlanningProgressDashboard/issues/new"))
            )
 )
