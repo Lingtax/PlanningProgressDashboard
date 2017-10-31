@@ -1,7 +1,6 @@
 library(shiny)
 library(ggplot2)
 library(pwr)
-library(lubridate)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {

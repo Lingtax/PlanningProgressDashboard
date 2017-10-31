@@ -12,12 +12,12 @@ navbarPage("Planning and Progress Dashboard",
                       selectInput("test", "Analysis type:", 
                                    choices = c("t-test", "1-way ANOVA", "Correlation", "GLM", "Proportions test")),
                       conditionalPanel("input.test == 't-test'", 
-                                       numericInput("td", "Std. Mean difference:", value = .2, step = .05),
+                                       numericInput("td", "Std. Mean difference (d):", value = .2, step = .05),
                                        em("small = .2, med = .5, large = .8"),
                                        radioButtons("ttype", "Type:", choiceNames = c("Independent samples", "One sample", "Paired samples"),
                                                     choiceValues = c("two.sample", "one.sample", "paired")),
-                                       radioButtons("talternative", "Tails:", choiceNames = c("Two tailed", "Lower", "Upper"), 
-                                                    choiceValues = c("two.sided", "less", "greater"))
+                                       radioButtons("talternative", "Tails:", choiceNames = c("Two tailed", "Upper"), 
+                                                    choiceValues = c("two.sided", "greater"))
                                        ),
                       
                       conditionalPanel("input.test == '1-way ANOVA'", 
@@ -27,7 +27,7 @@ navbarPage("Planning and Progress Dashboard",
                       ),
                       
                       conditionalPanel("input.test == 'Correlation'", 
-                                       numericInput("r", "Correlation coefficient:", value = .1, min = 0, max = 1, step = .05),
+                                       numericInput("r", "Correlation coefficient (r):", value = .1, min = 0, max = 1, step = .05),
                                        em("small = .1, med = .3, large = .5"),
                                        radioButtons("ralternative", "Tails:", choiceNames= c("Two-tailed", "one-tailed"),
                                                     choiceValues = c("two.sided", "greater"))
@@ -127,13 +127,13 @@ navbarPage("Planning and Progress Dashboard",
                         
                         conditionalPanel("input.prog_test == 't-test'", 
                                          conditionalPanel("input.solveFor == 'pwr'", 
-                                            numericInput("prog_td", "Std. Mean difference:", value = .2, step =.05),
+                                            numericInput("prog_td", "Std. Mean difference (d):", value = .2, step =.05),
                                             em("small = .2, med = .5, large = .8")
                                             ),
                                          radioButtons("prog_ttype", "Type:", choiceNames = c("Independent samples", "One sample", "Paired samples"),
                                                       choiceValues = c("two.sample", "one.sample", "paired")),
-                                         radioButtons("prog_talternative", "Tails:", choiceNames = c("Two tailed", "Lower", "Upper"), 
-                                                      choiceValues = c("two.sided", "less", "greater"))
+                                         radioButtons("prog_talternative", "Tails:", choiceNames = c("Two tailed",  "Upper"), 
+                                                      choiceValues = c("two.sided", "greater"))
                         ),
                         
                         conditionalPanel("input.prog_test == '1-way ANOVA'", 
@@ -146,7 +146,7 @@ navbarPage("Planning and Progress Dashboard",
                         
                         conditionalPanel("input.prog_test == 'Correlation'", 
                                          conditionalPanel("input.solveFor == 'pwr'",
-                                            numericInput("prog_r", "Correlation coefficient:", value = .1, min = 0, max = 1, step = .05),
+                                            numericInput("prog_r", "Correlation coefficient (r):", value = .1, min = 0, max = 1, step = .05),
                                             em("small = .1, med = .3, large = .5")
                                             )
                         ),
