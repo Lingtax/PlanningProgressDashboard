@@ -356,18 +356,29 @@ shinyServer(function(input, output) {
 
   # Rate summary
   output$prog_text <-  renderText({
-    
+    efftext <- ifelse(prog()$eff_rate > 1, 
+                      paste(round(prog()$eff_rate, 1),
+                            " participants per work day (not accounting for leave or illness).", sep = ""),
+                      paste(round(prog()$eff_rate*5, 1),
+                            " participants per work week (not accounting for leave or illness).", sep = "")
+                      )
+                      
+    reqtext <-   ifelse(prog()$req_rate > 1, 
+                         paste("The rate would have to increase to ",
+                               round(prog()$req_rate, 1), " participants per work day to meet the target completion date."),
+                        paste("The rate would have to increase to ",
+                              round(prog()$req_rate*5, 1), " participants per work week to meet the target completion date.")
+                        )
+      
     if(is.finite(prog()$eff_rate) & is.finite(prog()$req_rate)) {
       out <- 
         ifelse(prog()$eff_rate == 0, 
                "Please use the Planning panel to estimate required rate.",
         ifelse(prog()$schedule > 0,
-      paste("The current sampling rate is ", round(prog()$eff_rate, 1), 
-        " participants per work day (not accounting for leave or illness).", 
+      paste("The current sampling rate is ", efftext, 
         "Maintaining the current rate of recruitment will lead to a completion date of ",
         prog()$proj_date, ".", "That's a projection of ",  prog()$schedule, 
-        " days over the target. The rate would have to increase to ",
-        round(prog()$req_rate, 1), " participants per work day to meet the target completion date."),
+        " days over the target. ", reqtext),
         
       paste("The current sampling rate is ", round(prog()$eff_rate, 1), 
             " participants per work day (not accounting for leave or illness).",
@@ -379,15 +390,17 @@ shinyServer(function(input, output) {
     } else{ paste("Set recruitment start and target dates to begin.")}
   })
   
-# } else{
-#   paste()
-#   
   
-  # dateInput("Start_date", "Start date:", 
-  #           startview = "decade", format = "dd/mm/yyyy"),  
-  # dateInput("ProgTarget_date", "Target date:", 
-  #           startview = "decade", format = "dd/mm/yyyy"),  
-  # numericInput("Prog_target_n", "Target Sample size", value = 85),
-  # numericInput("Prog_current_n", "Current Sample size", value = 85),
+  # if(input$planSolveFor == 'rate' & is.finite(plan()$estRate)) {
+  #   rate <- ifelse(plan()$estRate > 1, paste(round(plan()$estRate, 1), "participants per work day (not accounting for leave or illness)."),
+  #                  paste(round(plan()$estRate*5, 1), "participants per work week (not accounting for leave or illness).")
+  #   )
+  #   
+  #   paste("This sampling plan requires an effective recruitment rate of", rate, sep = " ")
+  # } else if(input$planSolveFor=="date" & plan()$estDate>Sys.Date()) {
+  #   paste("This sampling plan has a projected completion date of ", plan()$estDate, ".", sep= "")
+  # }
+  # 
+
   
 })
