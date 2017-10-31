@@ -1,6 +1,7 @@
 library(shiny)
 library(ggplot2)
 library(pwr)
+library(lubridate)
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -111,34 +112,70 @@ shinyServer(function(input, output) {
   output$proppower <- renderText({pwr_prop()})
   
   
-  # Sampling rate
+  # Plan Sampling rate
+  
+  plan <- reactive({
+
+        data.frame(estDate = input$Plan_Start_date + as.integer(ceiling((input$Plan_target_n / input$estRate) * 7)), 
+         estRate = input$Plan_target_n / (as.integer(input$Plan_Target_date - input$Plan_Start_date))/7*5
+         )
+  })
+  
+  
   # Generate plot 
   output$plan_plot <- renderPlot({
-
-    df <- data.frame(Date = c(input$Plan_Start_date, input$Plan_Target_date),
-                     n = c(0, input$Plan_target_n)
-    )
-
-    p <- ggplot(df, aes(Date, n)) + 
-      geom_hline(yintercept = input$Plan_target_n, linetype = "dotted", colour= "red") +
-      theme_classic() + 
-      coord_cartesian(ylim = c(0, 20 + input$Plan_target_n))
-    if (as.integer(input$Plan_Target_date - input$Plan_Start_date)>0) {
-    p + geom_line(cex = 1, linetype = "dashed", col = "Blue")
     
-    } else {
-        p
+    if (input$planSolveFor == "rate") {
+    
+      df <- data.frame(Date = c(input$Plan_Start_date, input$Plan_Target_date),
+                     n = c(0, input$Plan_target_n))
+      
+      p <- ggplot(df, aes(Date, n)) + 
+        geom_hline(yintercept = input$Plan_target_n, linetype = "dotted", colour= "red") +
+        theme_classic() +
+        coord_cartesian(ylim = c(0, 20 + input$Plan_target_n))
+    
+        if (as.integer(input$Plan_Target_date - input$Plan_Start_date)>0) {
+            p <- p + geom_line(cex = 1, linetype = "dashed", col = "Blue")
+            }
+        }
+    
+    if (input$planSolveFor == "date") {
+      
+      df <- data.frame(Date = c(input$Plan_Start_date, plan()$estDate),
+                       n = c(0, input$Plan_target_n)
+      )
+      
+      p <- ggplot(df, aes(Date, n)) + 
+        geom_hline(yintercept = input$Plan_target_n, linetype = "dotted", colour= "red") +
+        theme_classic() +
+        coord_cartesian(ylim = c(0, 20 + input$Plan_target_n)) 
+      
+      
+      if (as.integer(plan()$estDate - input$Plan_Start_date)>0) {
+        p <- p + geom_line(cex = 1, linetype = "dashed", col = "Blue")
       }
+    }
     
+    p
+
   })
   
   # Rate summary
   output$plan_text <-  renderText({
-    plan_days_to_target <- (as.integer(input$Plan_Target_date - input$Plan_Start_date))/7*5
-    plan_rate <- input$Plan_target_n/ plan_days_to_target
-    if(is.finite(plan_rate)) {
-    c("This sampling plan requires an effective recruitment rate of", round(plan_rate, 1), "participants per work day (not accounting for leave or illness).")
+   
+
+    if(input$planSolveFor == 'rate' & is.finite(plan()$estRate)) {
+      rate <- ifelse(plan()$estRate > 1, paste(round(plan()$estRate, 1), "participants per work day (not accounting for leave or illness)."),
+                     paste(round(plan()$estRate*5, 1), "participants per work week (not accounting for leave or illness).")
+)
+      
+      paste("This sampling plan requires an effective recruitment rate of", rate, sep = " ")
+    } else if(input$planSolveFor=="date" & plan()$estDate>Sys.Date()) {
+      paste("This sampling plan has a projected completion date of ", plan()$estDate, ".", sep= "")
     }
+    
+    
   })
 
   

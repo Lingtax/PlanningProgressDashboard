@@ -48,12 +48,32 @@ navbarPage("Planning and Progress Dashboard",
                       hr(),
                       
                       h3("Sampling Rate"),
+
+                      numericInput("Plan_target_n", "Target Sample size", value = 85),
                       dateInput("Plan_Start_date", "Start date:", 
-                                startview = "month", format = "dd/mm/yyyy"), 
-                      dateInput("Plan_Target_date", "Target completion date:", 
-                                startview = "month", format = "dd/mm/yyyy"), 
-                      numericInput("Plan_target_n", "Target Sample size", value = 85)
+                                startview = "month", format = "dd/mm/yyyy"),
+                      
+                      radioButtons("planSolveFor", "Solve for:",
+                                   choiceNames = c("Sampling Rate", "Completion Date"), 
+                                   choiceValues = c("rate", "date")
                       ),
+                      
+                      conditionalPanel("input.planSolveFor == 'rate'", 
+                        dateInput("Plan_Target_date", "Target completion date:", 
+                                  startview = "month", format = "dd/mm/yyyy")
+                      ),
+
+                      conditionalPanel("input.planSolveFor == 'date'", 
+                        numericInput("estRate", "Participants / Obs. per week:", 
+                                     value = 5, min = 1, max = 300, step = 1)
+                      )
+                      
+                      
+                      ),
+                      
+
+                      
+                      
                       
 
 # Planning Main -----------------------------------------------------------
@@ -97,7 +117,7 @@ navbarPage("Planning and Progress Dashboard",
                         numericInput("Prog_current_n", "Current Sample size", value = 0),
                         hr(),
                         h3("Power"),
-                        radioButtons("solveFor", "Solve for:",
+                        radioButtons("solveFor", "Solve for:", 
                                      choiceNames = c("Power to detect", "Smallest Effect"), 
                                      choiceValues = c("pwr", "eff")
                                      ),
