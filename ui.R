@@ -209,6 +209,11 @@ navbarPage("Planning and Progress Dashboard",
                               
                               p(),
                               
+                              "Cohen's f is the standard deviation of the population means divided by their common standard 
+                              deviation. For equal population sizes, f is equal to the square root of Eta squared divided 
+                              by one minus eta squared.",
+                              p(),
+                              
                               "For bug reports and feature requests, please raise an issue at ", 
                               a("this github repository", href = "https://github.com/Lingtax/PlanningProgressDashboard/issues/new"))
            )

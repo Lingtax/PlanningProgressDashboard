@@ -7,4 +7,4 @@ In response to these demands, we present the [Planning and progress dashboard](h
 ![](ex.png)
 
 
-Originally devised to prevent Mathew having to hand calculate timelines and to reduce the anti-social tapping out of power calculations in confirmation panels, this dashboard now provides non R programmers access to the power functions in the `pwr` package, and some in-built calculations to estimate timelines and recruitment rates. 
+Originally devised to prevent Mathew having to hand calculate timelines and to reduce the anti-social tapping out of power calculations in confirmation panels, this dashboard now provides non-R programmers access to the power functions in the `pwr` package, and some in-built calculations to estimate timelines and recruitment rates. 
