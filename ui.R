@@ -1,11 +1,12 @@
 library(shiny)
 
 navbarPage("Planning and Progress Dashboard",
-
+          
 # Plannning Inputs --------------------------------------------------------
 
            
            tabPanel("Planning",
+                    tags$head(includeHTML(("g_analytics.html"))), # Google Analytics
                     sidebarLayout(
                       sidebarPanel(
                       h3("Power"),
